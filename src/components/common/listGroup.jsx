@@ -18,7 +18,7 @@ class ListGroup extends Component {
                 : "list-group-item"
             }
             onClick={() => onItemSelect(item)}
-            key={item[valueProperty] ? item[valueProperty] : ""}
+            key={item[valueProperty]}
             style={{ cursor: "pointer" }}
           >
             {item[textProperty]}
