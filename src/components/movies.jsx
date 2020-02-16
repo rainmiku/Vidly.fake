@@ -6,6 +6,7 @@ import Pagination from "./common/pagination";
 import { paginate } from "../utils/paginate";
 import ListGroup from "./common/listGroup";
 import _ from "lodash";
+import { Link } from "react-router-dom";
 
 class Movies extends Component {
   state = {
@@ -69,31 +70,41 @@ class Movies extends Component {
 
     const movies = paginate(sorted, currentPage, pageSize);
     return (
-      <div className="row">
-        <div className="col-3">
-          <ListGroup
-            items={genres}
-            onItemSelect={this.handleGenreSelect}
-            selectedItem={selectedGenre}
-          />
+      <React.Fragment>
+        <div className="row">
+          <div className="col-3">
+            <ListGroup
+              items={genres}
+              onItemSelect={this.handleGenreSelect}
+              selectedItem={selectedGenre}
+            />
+          </div>
+
+          <div className="col">
+            <Link
+              className="btn btn-primary"
+              to="/movies/new"
+              style={{ marginBottom: 20 }}
+            >
+              Add New Movie
+            </Link>
+            <p>Showing {filtered.length} movies in database</p>
+            <MoviesTable
+              movies={movies}
+              sortColumn={sortColumn}
+              onLike={this.handleLike}
+              onDelete={this.handleDelete}
+              onSort={this.handleSort}
+            />
+            <Pagination
+              itemCount={filtered.length}
+              pageSize={pageSize}
+              currentPage={currentPage}
+              onPageChange={this.handlePageChange}
+            />
+          </div>
         </div>
-        <div className="col">
-          <p>Showing {filtered.length} movies in database</p>
-          <MoviesTable
-            movies={movies}
-            sortColumn={sortColumn}
-            onLike={this.handleLike}
-            onDelete={this.handleDelete}
-            onSort={this.handleSort}
-          />
-          <Pagination
-            itemCount={filtered.length}
-            pageSize={pageSize}
-            currentPage={currentPage}
-            onPageChange={this.handlePageChange}
-          />
-        </div>
-      </div>
+      </React.Fragment>
     );
   }
 }
